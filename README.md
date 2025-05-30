@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# 🚀 Projeto Login Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Image](https://github.com/user-attachments/assets/03451399-4878-4771-be88-72b9f34250f7)
+*Imagem ilustrativa do projeto mostrando a tela de login*
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Sobre o Projeto
 
-### `npm start`
+Este projeto é uma aplicação simples de sistema de autenticação usando React com TypeScript. O foco principal foi criar um sistema de registro, login e dashboard usando **localStorage** para armazenar os usuários, além de implementar modais para exibir mensagens para o usuário.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Como foi feito?
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React** + **TypeScript** para a estrutura do frontend.
+- **localStorage** para persistência simples dos dados dos usuários no navegador.
+- Componentes reutilizáveis e estilizados com CSS.
+- Navegação entre páginas com **React Router**.
+- Uso de modais personalizados para feedback do usuário (ex: login bem-sucedido).
+- Validações básicas para login e registro.
 
-### `npm test`
+### Aplicação
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. O usuário se registra com nome, email e senha.
+2. Os dados são salvos no `localStorage`.
+3. No login, o sistema valida email/usuário e senha contra os dados armazenados.
+4. Se válido, exibe modal de sucesso e redireciona para a Dashboard.
+5. Dashboard exibe as informações do usuário logado e sua imagem (via GitHub, se disponível).
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tecnologias Utilizadas
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React** (v18.x)
+- **TypeScript**
+- **React Router Dom** (para navegação)
+- **CSS3**
+- **localStorage API** (navegador)
+- **Modal personalizado** em React
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Como rodar o projeto localmente
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone o repositório:
+  - git clone https://github.com/seu-usuario/login-portfolio.git
+  - cd login-portfolio
+  - npm install
+  - npm run
