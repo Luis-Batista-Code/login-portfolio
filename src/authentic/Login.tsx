@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
-import { getUsers, User } from '../authentic/authStorage';
 import Modal from '../components/Modal';
+import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [identifier, setIdentifier] = useState('');
@@ -11,24 +11,31 @@ const Login: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    const users = getUsers();
-    const userFound = users.find(
-      (user: User) =>
-        (user.email === identifier || user.username === identifier) &&
-        user.password === password
-    );
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, password }), // aceita email ou username
+      });
 
-    if (!userFound) {
+      if (!response.ok) {
+        throw new Error('Credenciais inválidas');
+      }
+
+      const data = await response.json();
+
+      // Salva token e usuário no localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('currentUser', JSON.stringify(data.user));
+      
+      setShowModal(true);
+    } catch (err) {
       setError('Usuário/email ou senha incorretos.');
-      return;
     }
-
-    localStorage.setItem('currentUser', JSON.stringify(userFound));
-    setShowModal(true);
   };
 
   const handleModalClose = () => {
@@ -59,12 +66,12 @@ const Login: React.FC = () => {
             required
           />
           <div className="forgot-password-text" style={{ marginTop: '10px' }}>
-            <a href="/ForgotPassword" className="forgot-password-link">Esqueci minha senha</a>
+            <Link to="/ForgotPassword" className="forgot-password-link">Esqueci minha senha</Link>
           </div>
-<p></p>
+          <p></p>
           <button className="button" type="submit">Sign in</button>
           <div className="register-text">
-            Não tem conta? <a href="/register" className="register-link">Registrar-me</a>
+            Não tem conta? <Link to="/register" className="register-link">Registrar-me</Link>
           </div>
         </form>
       </div>

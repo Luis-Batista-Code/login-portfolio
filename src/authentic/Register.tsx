@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
-import { getUsers, saveUser, userExists, User } from '../authentic/authStorage';
 import Modal from '../components/Modal';
+import { Link } from 'react-router-dom';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -15,7 +15,7 @@ const Register: React.FC = () => {
 
   const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -34,14 +34,24 @@ const Register: React.FC = () => {
       return;
     }
 
-    if (userExists(username, email)) {
-      setError('Usuário ou email já cadastrados.');
-      return;
-    }
+    try {
+      const res = await fetch('http://localhost:3001/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
 
-    saveUser({ username, email, password });
-    setModalMessage('Registro realizado com sucesso!');
-    setShowModal(true);
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.message || 'Erro no registro');
+        return;
+      }
+
+      setModalMessage('Registro realizado com sucesso!');
+      setShowModal(true);
+    } catch (err) {
+      setError('Erro ao conectar com o servidor.');
+    }
   };
 
   const handleModalClose = () => {
@@ -82,9 +92,9 @@ const Register: React.FC = () => {
           <button className="button" type="submit">Registrar</button>
         </form>
         <div style={{ marginTop: '15px' }}>
-          <a href="/" className="forgot-password-link">
-            Voltar para login
-          </a>
+        <Link to="/" className="forgot-password-link">
+  Voltar para login
+</Link>
         </div>
       </div>
       {showModal && <Modal message={modalMessage} onClose={handleModalClose} />}

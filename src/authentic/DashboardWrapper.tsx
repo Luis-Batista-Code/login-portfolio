@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './Dashboard';
 import { User } from './authStorage';
 
-const DashboardWrapper = () => {
+const DashboardWrapper: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
