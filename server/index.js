@@ -25,6 +25,7 @@ function saveUsers(users) {
   fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
 }
 
+// Rota para registrar novo usuário
 app.post('/register', (req, res) => {
   const { email, username, password } = req.body;
 
@@ -50,6 +51,7 @@ app.post('/register', (req, res) => {
   res.status(201).json({ message: 'Usuário criado com sucesso' });
 });
 
+// Rota para login
 app.post('/login', (req, res) => {
   const { username, email, password } = req.body;
 
@@ -72,7 +74,17 @@ app.post('/login', (req, res) => {
   res.json({ token: 'fake-jwt-token', user });
 });
 
-// Aqui carregamos o swagger.yaml e configuramos o Swagger UI
+// Rota GET para listar todos os usuários
+app.get('/users', (req, res) => {
+  try {
+    const users = loadUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao carregar usuários' });
+  }
+});
+
+// Configuração do Swagger UI
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
