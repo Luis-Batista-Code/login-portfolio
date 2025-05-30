@@ -53,17 +53,20 @@ app.post('/register', (req, res) => {
 
 // Rota para login
 app.post('/login', (req, res) => {
-  const { username, email, password } = req.body;
+  const { identifier, email, username, password } = req.body;
 
-  if (!username || !email || !password) {
+  // Priorize o que vier primeiro: identifier, email ou username
+  const loginId = identifier || email || username;
+
+  if (!loginId || !password) {
     return res.status(400).json({ message: 'Campos obrigatórios faltando' });
   }
 
   const users = loadUsers();
 
   const user = users.find(u =>
-    u.username.toLowerCase() === username.toLowerCase() &&
-    u.email.toLowerCase() === email.toLowerCase() &&
+    (u.username.toLowerCase() === loginId.toLowerCase() ||
+     u.email.toLowerCase() === loginId.toLowerCase()) &&
     u.password === password
   );
 
