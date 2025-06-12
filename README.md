@@ -42,7 +42,7 @@ Este projeto é uma aplicação simples de sistema de autenticação usando Reac
 ## Como rodar o projeto localmente
 
 1. Clone o repositório:
-  - git clone https://github.com/seu-usuario/login-portfolio.git
+  - git clone https://github.com/Luis-Batista-Code/login-portfolio.git
   - cd login-portfolio
   - npm install
   - npm run
